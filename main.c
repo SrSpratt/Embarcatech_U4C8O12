@@ -11,11 +11,11 @@
 #include <LEDMatrix_U4C6.h>
 #include <Interrupt_U4C6.h>
 #include <Interfaces_U4C6.H>
+#include <Joystick_U4C8.h>
 
 #define PINS 5
 #define BUTTONA 5
 #define BUTTONB 6
-
 
 
 int main(){
@@ -87,60 +87,18 @@ int main(){
     SetRGBInterrupt(&TogglePinNoTime, BUTTONA, LEDPins, &HandleDisplayInterruptI2C); // Configura a interrupção no botão A
     SetRGBInterrupt(&TogglePinNoTime, BUTTONB, LEDPins, &HandleDisplayInterruptI2C); // Configura a interrupção no botão B
 
+    ConfigADC();
+
     char a;
     while(1){
-
-        a = getchar(); // "Escuta" o caractere inserido via uart/serial
-        if (a >= '0' && a <= 'z'){
-            char string[13] = {'C', 'a', 'r', 'a', 'c', 't', 'e', 'r', 'e', ':', ' ', a, '\0'};
-            I2CDraw(&ssd, cor, string); // desenha no display via I2C
-            printf("Caractere enviado: %c!\n", a); //escreve na saída serial via uart
+        uint16_t previousValues[2];
+        uint16_t values[2];
+        JoystickRead(values);
+        if (values[0] != previousValues[0] || values[1] != previousValues[1]){
+            printf("new X: %d\nnew Y: %d\n", values[0], values[1]);
+            previousValues[0] = values[0];
+            previousValues[1] = values[1];
         }
-        
-        switch(a){
-            case '0':
-                ArrayCopySameSize(sketch.Figure, SketchArray(0), VECTORSIZE); //copia o vetor do número no vetor de LEDs da matriz
-                Draw(sketch, ledConf, pio); //desenha o vetor copiado com o número
-                break;
-            case '1':
-                ArrayCopySameSize(sketch.Figure, SketchArray(1), VECTORSIZE);
-                Draw(sketch, ledConf, pio);
-                break;
-            case '2':
-                ArrayCopySameSize(sketch.Figure, SketchArray(2), VECTORSIZE);
-                Draw(sketch, ledConf, pio);
-                break;
-            case '3':
-                ArrayCopySameSize(sketch.Figure, SketchArray(3), VECTORSIZE);
-                Draw(sketch, ledConf, pio);
-                break;
-            case '4':
-                ArrayCopySameSize(sketch.Figure, SketchArray(4), VECTORSIZE);
-                Draw(sketch, ledConf, pio);
-                break;
-            case '5':
-                ArrayCopySameSize(sketch.Figure, SketchArray(5), VECTORSIZE);
-                Draw(sketch, ledConf, pio);
-                break;
-            case '6':
-                ArrayCopySameSize(sketch.Figure, SketchArray(6), VECTORSIZE);
-                Draw(sketch, ledConf, pio);
-                break;
-            case '7':
-                ArrayCopySameSize(sketch.Figure, SketchArray(7), VECTORSIZE);
-                Draw(sketch, ledConf, pio);
-                break;
-            case '8':
-                ArrayCopySameSize(sketch.Figure, SketchArray(8), VECTORSIZE);
-                Draw(sketch, ledConf, pio);
-                break;
-            case '9':
-                ArrayCopySameSize(sketch.Figure, SketchArray(9), VECTORSIZE);
-                Draw(sketch, ledConf, pio);
-                break;
-
-        }
-        sleep_ms(1);
     }
 
 
