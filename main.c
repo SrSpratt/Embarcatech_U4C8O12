@@ -42,38 +42,14 @@ int main(){
             .Pin = BUTTONA, 
             .Input = true
         },
-        { 
-            .Pin = BUTTONB, 
+        {
+            .Pin = JOYSTICKBPIN,
             .Input = true
-        }
-    };
-    Sketch sketch = { //Struct para armazenar os desenhos da matriz de LEDs (para o controle via PIO)
-        .Figure = {
-            0.0, 0.0, 0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0, 0.0, 0.0
-        },
-        .Index = -1,
-        .MainColor = {
-            .Red = 0.01,
-            .Green = 0.0,
-            .Blue = 0.0
-        },
-        .BackgroundColor = {
-            .Red = 0.0,
-            .Green = 0.0,
-            .Blue = 0.01
         }
     };
     uint32_t ledConf = 0;
 
     Config(pins, PINS, &pio); // Configuração da UART e da PIO
-
-    InitPIO(&pio, MATRIXPIN); // Inizialização da PIO
-
-    Draw(sketch, ledConf, pio); //Desenha um quadrado azul
 
     I2CInit(&ssd); //Inicia a I2C
 
@@ -85,7 +61,7 @@ int main(){
     int LEDPins[3] = {REDPIN, BLUEPIN, GREENPIN}; // Inicializa um vetor com  os três valores de pinos de LEDs RGB
 
     SetRGBInterrupt(&TogglePinNoTime, BUTTONA, LEDPins, &HandleDisplayInterruptI2C); // Configura a interrupção no botão A
-    SetRGBInterrupt(&TogglePinNoTime, BUTTONB, LEDPins, &HandleDisplayInterruptI2C); // Configura a interrupção no botão B
+    SetRGBInterrupt(&TogglePinNoTime, JOYSTICKBPIN, LEDPins, &HandleDisplayInterruptI2C); // Configura a interrupção no botão A
 
     ConfigADC();
 
