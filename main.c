@@ -67,14 +67,7 @@ int main(){
 
     char a;
     while(1){
-        uint16_t previousValues[2];
-        uint16_t values[2];
-        JoystickRead(values);
-        if (values[0] != previousValues[0] || values[1] != previousValues[1]){
-            printf("new X: %d\nnew Y: %d\n", values[0], values[1]);
-            previousValues[0] = values[0];
-            previousValues[1] = values[1];
-        }
+        TraceDot(&ssd, cor);
     }
 
 

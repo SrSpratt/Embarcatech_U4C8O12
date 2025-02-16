@@ -19,9 +19,9 @@ void I2CInit(ssd1306_t* ssd){
 void I2CDraw(ssd1306_t* ssd, bool cor, char* string){
     // Atualiza o conteúdo do display com animações
     ssd1306_fill(ssd, !cor); // Limpa o display
-    ssd1306_rect(ssd, 1, 1, 126, 62, cor, !cor);
-    ssd1306_rect(ssd, 2, 2, 125, 61, cor, !cor);
-    ssd1306_rect(ssd, 95, 62, 5, 5, cor, cor);
+    ssd1306_rect(ssd, 1, 1, 127, 63, cor, !cor);
+    ssd1306_rect(ssd, 2, 2, 126, 62, cor, !cor);
+    ssd1306_rect(ssd, 31, 63, 2, 2, cor, cor);
     ssd1306_send_data(ssd); // Atualiza o display
 
     //sleep_ms(1000);

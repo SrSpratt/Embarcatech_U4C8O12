@@ -1,6 +1,7 @@
 #ifndef JOYSTICK_U4C8_H
 #define JOYSTICK_U4C8_H
 
+#include <ssd1306.h>
 #include "hardware/adc.h"
 
 #define JOYSTICKHPIN 26
@@ -13,5 +14,7 @@
 void ConfigADC();
 
 void JoystickRead(uint16_t[]);
+void MapToDisplay(float[]);
+void TraceDot(ssd1306_t*, bool cor);
 
 #endif
