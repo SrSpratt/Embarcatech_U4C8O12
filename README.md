@@ -4,8 +4,7 @@
 * Roberto Vítor Lima Gomes Rodrigues
 
 #### Vídeo de funcionamento
-* https://youtu.be/U6oxTWKkKCs
-    * Obs.: foram implementadas todas as características pedidas na atividade -> Protocolos UART e I2C, verificáveis pelo monitor serial e o display OLED; Interrupções e Debouncing, verificáveis pelos botões e pela ausências de missclicks; controle dos LEDs RGBs e controle da matriz de LEDs.
+* 
 
 #### Instruções de compilação
 Certifique-se de que você tem o ambiente configurado conforme abaixo:
@@ -18,14 +17,11 @@ Certifique-se de que você tem o ambiente configurado conforme abaixo:
 * Arraste o arquivo até a placa, que o programa se iniciará
 
 #### Manual do programa
-Ao executar o programa, todos os leds serão ligados com a cor azul, indicando o início do programa:
-* A lógica do programa é que ao apertar o botão A, será ligado o LED RGB verde com a indicação no display 1306 respectiva e também via UART.
-    * Ao clicar novamente no botão, o LED será desligado.
-* A lógica do programa é que ao apertar o botão B, será ligado o LED RGB azul com a indicação no display 1306 respectiva e também via UART.
-    * Ao clicar novamente no botão, o LED será desligado.
-* Ao inserir caracteres alfanuméricos no monitor serial:
-    * Se for número de 0 a 9 -> aparecerão as indicações do número digitado no display, na matriz de LEDs e também no monitor serial via UART.
-    * Se for letra -> aparecerão as indicações da letra digitada no display, e também no monitor serial via UART.
-* Obs. I: o debounce foi implementado nos botões, de forma que não houvesse missclick (conforme estabelecido na questão).
-* Obs. II: os LEDs da matriz estão configurados com o brilho mais baixo do que 100%, pois são muito fortes.
+Ao executar o programa, as seguintes características poderão ser verificadas:
+* Ao movimentar o joystick no eixo X, o LED vermelho terá seu valor ajustado com PWM¹, e o quadrado de 8x8 no display ssd1306 seguirá o movimento.
+* Ao movimentar o joystick no eixo Y, o LED azul terá seu valor ajustado com PWM¹, e o quadrado de 8x8 no display ssd1306 seguirá o movimento.
+* Ao clicar no botão do joystick, as bordas da imagem no display ssd1306 mudarão.
+* Ao clicar no botão A, o LED verde se acenderá.
+* ¹Obs. I: a modulação (PWM) é feita tal que na posição 0 (central) dos eixos, os LEDs sejam acesos com fraca intensidade, sendo esta aumentada ao mover o joystick para os extremos.
+* Obs. II: o debounce foi implementado nos botões, de forma que não houvesse missclick (conforme estabelecido na questão).
 * Obs. III: documentei todo o código com doxygen, então ao passar o cursos do mouse em cima de qualquer uma das funções, será mostrada uma pequena descrição da implementação.
