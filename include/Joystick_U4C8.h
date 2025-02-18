@@ -15,6 +15,6 @@ void ConfigADC();
 
 void JoystickRead(uint16_t[]);
 void MapToDisplay(float[]);
-void TraceDot(ssd1306_t*, bool cor);
+void TraceDot(ssd1306_t*, bool cor, uint8_t[]);
 
 #endif

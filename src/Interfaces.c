@@ -21,7 +21,6 @@ void I2CDraw(ssd1306_t* ssd, bool cor, char* string){
     ssd1306_fill(ssd, !cor); // Limpa o display
     ssd1306_rect(ssd, 1, 1, 127, 63, cor, !cor);
     ssd1306_rect(ssd, 2, 2, 126, 62, cor, !cor);
-    ssd1306_rect(ssd, 31, 63, 2, 2, cor, cor);
     ssd1306_send_data(ssd); // Atualiza o display
 
     //sleep_ms(1000);

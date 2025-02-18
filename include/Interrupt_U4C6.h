@@ -2,7 +2,6 @@
 #define INTERRUPTU4C6_H
 
 #include <General_U4C6.h>
-#include "LEDMatrix_U4C6.h"
 
 /**
  * @brief Tipo de função de callback para interrupções baseadas em novos eventos.

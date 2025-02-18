@@ -114,6 +114,23 @@ void ssd1306_rect(ssd1306_t *ssd, uint8_t top, uint8_t left, uint8_t width, uint
   }
 }
 
+void ssd1306_rect_center(ssd1306_t *ssd, uint8_t ycenter, uint8_t xcenter, uint8_t width, uint8_t height, bool value, bool fill) {
+  for (uint8_t x = xcenter - width/2; x <= xcenter + width/2; ++x) {
+    ssd1306_pixel(ssd, x, ycenter - height/2, value);
+    ssd1306_pixel(ssd, x, ycenter + height/2, value);
+  }
+  for (uint8_t y = ycenter - height/2; y <= ycenter + height/2; ++y) {
+    ssd1306_pixel(ssd, xcenter - width/2, y, value);
+    ssd1306_pixel(ssd, xcenter + width/2, y, value);
+  }
+
+  for (uint8_t x = xcenter - width/2; x < xcenter + width/2; ++x) {
+    for (uint8_t y = ycenter - height/2; y < ycenter + height/2; ++y) {
+      ssd1306_pixel(ssd, x, y, value);
+    }
+  }
+}
+
 
 void ssd1306_line(ssd1306_t *ssd, uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, bool value) {
     int dx = abs(x1 - x0);
