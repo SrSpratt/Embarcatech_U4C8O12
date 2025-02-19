@@ -34,12 +34,12 @@ void TraceDot(ssd1306_t* ssd, bool cor, uint8_t pins[], int dBorder, bool pwm){
         JoystickRead(values);
         if (values[0] != previousValues[0] || values[1] != previousValues[1]){
 
-            // coloca o centro na coordenada 2047 para calcular a intensidade do pwm
-            int valueA = (values[1] - 2047);
-            int valueB = (values[0] - 2047);
+            // coloca o centro na coordenada 2048 para calcular a intensidade do pwm
+            int valueA = (values[1] - 2048);
+            int valueB = (values[0] - 2048);
             if (pwm){ // verifica se a interrupção do botão A foi acionada
-                SetPWMPulseWidth(pins[0],  valueA > 0 ? valueA * 9.77 : (-valueA) * 9.77);
-                SetPWMPulseWidth(pins[1], valueB > 0 ? valueB * 9.77 : (-valueB) * 9.77);
+                SetPWMPulseWidth(pins[0],  valueA > 0 ? valueA * 9.76 : (-valueA) * 9.76); // 9.76 = 20000/2048
+                SetPWMPulseWidth(pins[1], valueB > 0 ? valueB * 9.76 : (-valueB) * 9.76);
             } else {
                 SetPWMPulseWidth(pins[0],  0);
                 SetPWMPulseWidth(pins[1], 0);
