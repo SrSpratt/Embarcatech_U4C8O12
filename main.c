@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
-#include "hardware/pio.h"
 #include "hardware/timer.h"
 #include "hardware/clocks.h"
 #include "hardware/i2c.h"
 #include <ssd1306.h>
 #include <font.h>
-#include <General_U4C6.h>
-#include <MainLED_U4C6.h>
-#include <Interrupt_U4C6.h>
-#include <Interfaces_U4C6.H>
+#include <General_U4C8.h>
+#include <MainLED_U4C8.h>
+#include <Interrupt_U4C8.h>
+#include <Interfaces_U4C8.H>
 #include <Joystick_U4C8.h>
 #include <PWM_U4C8.h>
 
@@ -20,11 +19,9 @@
 int main(){
 
     ssd1306_t ssd; //Declaração de uma struct para a manipulação do display
-    bool cor = true;  
+    bool cor = true;  //Facilitar a manipulação da pintura aos pixels
 
-    PIORefs pio; //declaração da struct para armazenar a PIO
-
-    PinOut pins[PINS] = { //inicialização dos pinos de LEDs e botões
+    PinOut pins[PINS] = { //iniciação dos pinos de LEDs e botões
         { 
             .Pin = GREENPIN, 
             .Input = false
@@ -39,7 +36,7 @@ int main(){
         }
     };
 
-    Config(pins, PINS, &pio); // Configuração da UART e da PIO
+    Config(pins, PINS); // Configuração da UART e da PIO
 
     I2CInit(&ssd); //Inicia a I2C
 
@@ -47,10 +44,15 @@ int main(){
     interruptContext.pinToCompare[0] = BUTTONA; // Armazena o pino do botão A para no contexto global da interrupção
     interruptContext.SSD = &ssd; // Armazena o endereço da struct de manipulação do display no contexto global da interrupção
 
+    //Controlador do estado da borda -> falso é uma borda única, verdadeiro é borda tripla
+    interruptContext.dBorder = false;
+    //Controlador do pwm ligado/desligado
+    interruptContext.pwm = true;
+
     int LEDPins[3] = {REDPIN, BLUEPIN, GREENPIN}; // Inicializa um vetor com  os três valores de pinos de LEDs RGB
 
-    SetRGBInterrupt(&TogglePinNoTime, BUTTONA, LEDPins, &HandleDisplayInterruptI2C); // Configura a interrupção no botão A
-    SetRGBInterrupt(&TogglePinNoTime, JOYSTICKBPIN, LEDPins, &HandleDisplayInterruptI2C); // Configura a interrupção no botão A
+    SetRGBInterrupt(&TogglePinNoTime, BUTTONA, LEDPins); // Configura a interrupção no botão A
+    SetRGBInterrupt(&TogglePinNoTime, JOYSTICKBPIN, LEDPins); // Configura a interrupção no botão A
 
     ConfigADC();
 
@@ -61,7 +63,7 @@ int main(){
 
     char a;
     while(1){
-        TraceDot(&ssd, cor, ledpins);
+        TraceDot(&ssd, cor, ledpins, interruptContext.dBorder, interruptContext.pwm);
     }
 
 

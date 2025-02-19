@@ -59,11 +59,8 @@ add_subdirectory(src)
 #Cria os arquivos: map, bin, hex e uf2
 pico_add_extra_outputs(${PROJECT_NAME})
 
-pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/src/PIO_U4C6.pio)
-
 target_link_libraries(${PROJECT_NAME}
     pico_stdlib
-    hardware_pio
     hardware_adc
     hardware_clocks
     hardware_gpio
